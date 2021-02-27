@@ -19,12 +19,10 @@ export PATH="$PATH:${XEUS_PREFIX}/bin"
 conda install -c conda-forge -y cmake xeus=1.0.0 cling=0.8 clangdev=5.0 llvmdev=5 nlohmann_json cppzmq xtl pugixml cxxopts
 
 # Install xeus-cling
-XEUS_CLING_VERSION=0.12.0
 rm -rf /tmp/xeus-cling
 cd /tmp
 git clone https://github.com/jupyter-xeus/xeus-cling.git
 cd xeus-cling
-git checkout ${XEUS_CLING_VERSION}
 mkdir -p build && cd build
 cmake -D CMAKE_INSTALL_PREFIX=${XEUS_PREFIX} -D CMAKE_INSTALL_LIBDIR=${XEUS_PREFIX}/lib -D DOWNLOAD_GTEST=ON ..
 make install -j$(nproc)

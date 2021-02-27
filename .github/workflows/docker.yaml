@@ -12,8 +12,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      # - uses: uraimo/run-on-arch-action@v2.0.5
-      #   name: Build for arm64
+      - name: Build for amd64
+        run: |
+          ./build.sh
+          mkdir -p out
+          mv /out/xeus-cling.$(uname -m).tar.gz out
+      # - name: Build for arm64
+      #   uses: uraimo/run-on-arch-action@v2.0.5
+
       #   with:
       #     arch: aarch64
       #     distro: buster
@@ -24,12 +30,7 @@ jobs:
       #       /data/build.sh
       #       mkdir -p /data/out
       #       mv /out/xeus-cling.$(uname -m).tar.gz /data/out
-      - name: Build for amd64
-        run: |
-          build.sh
-          mkdir -p out
-          mv /out/xeus-cling.$(uname -m).tar.gz out
-      - name: Publish binaries to GitHub releases
+      -  name: Publish binaries to GitHub releases
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: marvinpinto/action-automatic-releases@latest
         with:
