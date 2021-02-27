@@ -24,10 +24,10 @@ jobs:
         run: |
           docker load -i /tmp/xeus-cling-builder-amd64.tar
           docker run --name xeus-cling-builder-amd64 -v ${PWD}:/data:z pojntfx/xeus-cling-builder-amd64:latest
-      # - name: Build for arm64
-      #   run: |
-      #     docker load -i /tmp/xeus-cling-builder-arm64.tar
-      #     docker run --name xeus-cling-builder-arm64 -v ${PWD}:/data:z pojntfx/xeus-cling-builder-arm64:latest
+      - name: Build for arm64
+        run: |
+          docker load -i /tmp/xeus-cling-builder-arm64.tar
+          docker run --name xeus-cling-builder-arm64 -v ${PWD}:/data:z pojntfx/xeus-cling-builder-arm64:latest
       - name: Publish binaries to GitHub releases
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: marvinpinto/action-automatic-releases@latest
