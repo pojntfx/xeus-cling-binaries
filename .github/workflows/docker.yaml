@@ -14,6 +14,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build for amd64
         run: |
+          sudo apt update
+          sudo apt install -y build-essential cmake curl git sudo llvm
           ./build.sh
           mkdir -p out
           mv /out/xeus-cling.$(uname -m).tar.gz out
@@ -22,11 +24,13 @@ jobs:
 
       #   with:
       #     arch: aarch64
-      #     distro: buster
+      #     distro: ubuntu18.04
       #     githubToken: ${{ github.token }}
       #     dockerRunArgs: |
       #       --volume "${PWD}:/data"
       #     run: |
+      #       apt update
+      #       apt install -y build-essential cmake curl git sudo llvm
       #       /data/build.sh
       #       mkdir -p /data/out
       #       mv /out/xeus-cling.$(uname -m).tar.gz /data/out
