@@ -29,7 +29,7 @@ sudo make install -j$(nproc)
 rm -rf /tmp/xeus-cling
 
 # Remove build dependencies
-conda clean -y -f
+# conda clean -y -f
 
 # Create tar archive
 cd ${XEUS_PREFIX}
