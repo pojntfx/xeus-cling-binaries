@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Install build dependencies
-sudo apt update
-sudo apt install -y build-essential cmake curl git sudo
-
 # Install miniforge
 XEUS_PREFIX=/usr/local/xeus-cling
 curl -L -o /tmp/miniforge.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-$(uname -m).sh
