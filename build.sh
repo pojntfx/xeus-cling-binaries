@@ -8,7 +8,7 @@ sudo apt install -y build-essential cmake curl git sudo
 XEUS_PREFIX=/usr/local/xeus-cling
 curl -L -o /tmp/miniforge.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-$(uname -m).sh
 chmod +x /tmp/miniforge.sh
-mkdir -p ${XEUS_PREFIX}
+sudo mkdir -p ${XEUS_PREFIX}
 sudo /tmp/miniforge.sh -bfp ${XEUS_PREFIX} -u
 rm /tmp/miniforge.sh
 
@@ -29,7 +29,7 @@ sudo make install -j$(nproc)
 rm -rf /tmp/xeus-cling
 
 # Remove build dependencies
-# conda clean -y -f
+conda clean -y -f
 
 # Create tar archive
 cd ${XEUS_PREFIX}
