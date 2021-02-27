@@ -30,7 +30,7 @@ jobs:
       #       /data/build.sh
       #       mkdir -p /data/out
       #       mv /out/xeus-cling.$(uname -m).tar.gz /data/out
-      -  name: Publish binaries to GitHub releases
+      - name: Publish binaries to GitHub releases
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: marvinpinto/action-automatic-releases@latest
         with:
