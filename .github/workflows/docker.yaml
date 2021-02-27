@@ -19,12 +19,17 @@ jobs:
       - name: Build builder for amd64 and arm64
         run: |
           docker buildx build --output "type=docker,push=false,name=pojntfx/xeus-cling-builder-amd64:latest,dest=/tmp/xeus-cling-builder-amd64.tar" --platform linux/amd64 .
+          docker buildx build --output "type=docker,push=false,name=pojntfx/xeus-cling-builder-arm64:latest,dest=/tmp/xeus-cling-builder-arm64.tar" --platform linux/arm64 .
       - name: Build for amd64
         run: |
           docker load -i /tmp/xeus-cling-builder-amd64.tar
           docker run --name xeus-cling-builder-amd64 -v ${PWD}:/data:z pojntfx/xeus-cling-builder-amd64:latest
+      # - name: Build for arm64
+      #   run: |
+      #     docker load -i /tmp/xeus-cling-builder-arm64.tar
+      #     docker run --name xeus-cling-builder-arm64 -v ${PWD}:/data:z pojntfx/xeus-cling-builder-arm64:latest
       - name: Publish binaries to GitHub releases
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
