@@ -1,0 +1,40 @@
+name: Docker CI
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      # - uses: uraimo/run-on-arch-action@v2.0.5
+      #   name: Build for arm64
+      #   with:
+      #     arch: aarch64
+      #     distro: buster
+      #     githubToken: ${{ github.token }}
+      #     dockerRunArgs: |
+      #       --volume "${PWD}:/data"
+      #     run: |
+      #       /data/build.sh
+      #       mkdir -p /data/out
+      #       mv /out/xeus-cling.$(uname -m).tar.gz /data/out
+      - name: Build for amd64
+        run: |
+          build.sh
+          mkdir -p out
+          mv /out/xeus-cling.$(uname -m).tar.gz out
+      - name: Publish binaries to GitHub releases
+        if: ${{ github.ref == 'refs/heads/master' }}
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          files: |
+            out/*
