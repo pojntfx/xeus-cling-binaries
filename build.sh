@@ -1,11 +1,15 @@
 #!/bin/bash
 
+# Install dependencies
+apt update
+apt install -y build-essential cmake curl git sudo
+
 # Install miniforge
 XEUS_PREFIX=/usr/local/xeus-cling
 curl -L -o /tmp/miniforge.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-$(uname -m).sh
 chmod +x /tmp/miniforge.sh
-sudo mkdir -p ${XEUS_PREFIX}
-sudo /tmp/miniforge.sh -bfp ${XEUS_PREFIX} -u
+mkdir -p ${XEUS_PREFIX}
+/tmp/miniforge.sh -bfp ${XEUS_PREFIX} -u
 rm /tmp/miniforge.sh
 
 # Add miniforge to the path temporarily
@@ -21,7 +25,7 @@ git clone https://github.com/jupyter-xeus/xeus-cling.git
 cd xeus-cling
 mkdir -p build && cd build
 cmake -D CMAKE_INSTALL_PREFIX=${XEUS_PREFIX} -D CMAKE_INSTALL_LIBDIR=${XEUS_PREFIX}/lib -D DOWNLOAD_GTEST=ON ..
-sudo make install -j$(nproc)
+make install -j$(nproc)
 rm -rf /tmp/xeus-cling
 
 # Remove build dependencies
@@ -29,5 +33,9 @@ conda clean -y -f
 
 # Create tar archive
 cd ${XEUS_PREFIX}
-sudo mkdir -p /out
-sudo tar -zcvf /out/xeus-cling.$(uname -m).tar.gz *
+mkdir -p /out
+tar -zcvf /out/xeus-cling.$(uname -m).tar.gz *
+
+# Copy to /out
+mkdir -p /data/out
+mv /out/xeus-cling.$(uname -m).tar.gz /data/out

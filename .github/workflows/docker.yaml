@@ -12,28 +12,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Build for amd64
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build builder for amd64 and arm64
         run: |
-          sudo apt update
-          sudo apt install -y build-essential cmake curl git sudo llvm
-          ./build.sh
-          mkdir -p out
-          mv /out/xeus-cling.$(uname -m).tar.gz out
+          docker buildx build --platform linux/amd64 -t xeus-cling-builder-amd64 .
+          # docker buildx build --platform linux/arm64 -t xeus-cling-builder-arm64 .
+      - name: Build for amd64
+        run: docker run --name xeus-cling-builder-amd64 -v ${PWD}:/data:z xeus-cling-builder-amd64
       # - name: Build for arm64
-      #   uses: uraimo/run-on-arch-action@v2.0.5
-
-      #   with:
-      #     arch: aarch64
-      #     distro: ubuntu18.04
-      #     githubToken: ${{ github.token }}
-      #     dockerRunArgs: |
-      #       --volume "${PWD}:/data"
-      #     run: |
-      #       apt update
-      #       apt install -y build-essential cmake curl git sudo llvm
-      #       /data/build.sh
-      #       mkdir -p /data/out
-      #       mv /out/xeus-cling.$(uname -m).tar.gz /data/out
+      #   run: docker run --name xeus-cling-builder-arm64 -v ${PWD}:/data:z xeus-cling-builder-arm64
       - name: Publish binaries to GitHub releases
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: marvinpinto/action-automatic-releases@latest
