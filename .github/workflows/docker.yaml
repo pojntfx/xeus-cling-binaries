@@ -18,8 +18,8 @@ jobs:
         uses: docker/setup-buildx-action@v1
       - name: Build builder for amd64 and arm64
         run: |
-          docker buildx build --platform linux/amd64 -t xeus-cling-builder-amd64 .
-          # docker buildx build --platform linux/arm64 -t xeus-cling-builder-arm64 .
+          docker buildx build --output type=oci --platform linux/amd64 -t xeus-cling-builder-amd64 .
+          # docker buildx build --output type=oci --platform linux/arm64 -t xeus-cling-builder-arm64 .
       - name: Build for amd64
         run: docker run --name xeus-cling-builder-amd64 -v ${PWD}:/data:z xeus-cling-builder-amd64
       # - name: Build for arm64
