@@ -2,7 +2,7 @@
 
 Weekly builds of https://github.com/jupyter-xeus/xeus-cling.
 
-![Docker CI](https://github.com/pojntfx/xeus-cling-binaries/workflows/Docker%20CI/badge.svg)
+![hydrun CI](https://github.com/pojntfx/xeus-cling-binaries/workflows/hydrun%20CI/badge.svg)
 
 ## Installation
 
