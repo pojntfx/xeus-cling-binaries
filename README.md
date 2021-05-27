@@ -16,13 +16,13 @@ curl -L -o /tmp/xeus-cling.tar.gz https://github.com/pojntfx/xeus-cling-binaries
 
 # Extract the package to /usr/local/xeus-cling. You must install in this prefix.
 XEUS_PREFIX=/usr/local/xeus-cling
-mkdir -p ${XEUS_PREFIX}
-tar -C ${XEUS_PREFIX} -xzf /tmp/xeus-cling.tar.gz
+sudo mkdir -p ${XEUS_PREFIX}
+sudo tar -C ${XEUS_PREFIX} -xzf /tmp/xeus-cling.tar.gz
 
 # Install the kernels
-jupyter kernelspec install ${XEUS_PREFIX}/share/jupyter/kernels/xcpp11 --sys-prefix
-jupyter kernelspec install ${XEUS_PREFIX}/share/jupyter/kernels/xcpp14 --sys-prefix
-jupyter kernelspec install ${XEUS_PREFIX}/share/jupyter/kernels/xcpp17 --sys-prefix
+sudo jupyter kernelspec install ${XEUS_PREFIX}/share/jupyter/kernels/xcpp11 --sys-prefix
+sudo jupyter kernelspec install ${XEUS_PREFIX}/share/jupyter/kernels/xcpp14 --sys-prefix
+sudo jupyter kernelspec install ${XEUS_PREFIX}/share/jupyter/kernels/xcpp17 --sys-prefix
 ```
 
 ## License
